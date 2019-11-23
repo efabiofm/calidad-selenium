@@ -15,9 +15,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class SeleniumTestV2 {
     WebDriver driver;
@@ -30,7 +32,202 @@ public class SeleniumTestV2 {
     public void testCase1() {
         driver = new ChromeDriver();
         driver.get("http://demo.nopcommerce.com");
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/computers");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/electronics");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/apparel");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/digital-downloads");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/books");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/jewelry");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/gift-cards");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.findElement(By.xpath("//div[@class='header-logo']/a")).click();
         driver.close();
+        System.out.println("TC1: La prueba se ejecutó correctamente!");
+    }
+    
+    @Test
+    public void testCase2() throws InterruptedException {
+        driver = new ChromeDriver();
+        driver.get("http://demo.nopcommerce.com/wishlist");
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        String noDataText = driver.findElement(By.className("no-data")).getText();
+        assertEquals("The wishlist is empty!", noDataText);
+        WebElement searchBar = driver.findElement(By.id("small-searchterms"));
+        searchBar.sendKeys("Fahrenheit 451");
+        searchBar.sendKeys(Keys.ENTER);
+        driver.findElement(By.className("add-to-wishlist-button")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.get("http://demo.nopcommerce.com/wishlist");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        String skuNumber = driver.findElement(By.className("sku-number")).getText();
+        assertEquals("FR_451_RB", skuNumber);
+        driver.findElement(By.className("cart-label")).click();
+        String noDataText2 = driver.findElement(By.className("no-data")).getText();
+        assertEquals("Your Shopping Cart is empty!", noDataText2);
+        driver.findElement(By.className("wishlist-label")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.findElement(By.name("addtocart")).click();
+        driver.findElement(By.name("addtocartbutton")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        skuNumber = driver.findElement(By.className("sku-number")).getText();
+        assertEquals("FR_451_RB", skuNumber);
+        driver.findElement(By.name("continueshopping")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });  
+        System.out.println("TC2: La prueba se ejecutó correctamente!");
+    }
+    
+    @Test
+    public void testCase3() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        driver.get("http://demo.nopcommerce.com/cart");
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.findElement(By.className("country-input")).click();
+        WebElement countrySelector = driver.findElement(By.id("CountryId"));
+        countrySelector.sendKeys("cos");
+        countrySelector.sendKeys(Keys.ENTER);
+        
+        WebElement zipCode = driver.findElement(By.id("ZipPostalCode"));
+        zipCode.sendKeys("1000-1");
+        
+        driver.findElement(By.id("estimate-shipping-button")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        
+        driver.findElement(By.name("termsofservice")).click();
+        driver.findElement(By.name("checkout")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        
+        String signInText = driver.findElement(By.className("page-title")).getText();
+        assertEquals("Welcome, Please Sign In!", signInText);
+        
+        driver.findElement(By.className("cart-label")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        
+        WebElement qtyField = driver.findElement(By.id("ZipPostalCode"));
+        qtyField.clear();
+        qtyField.sendKeys("0");
+        
+        driver.findElement(By.name("updatecart")).click();
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return ((JavascriptExecutor) driver).executeScript(
+                        "return document.readyState"
+                ).equals("complete");
+            }
+        });
+        driver.close();
+        System.out.println("TC3: La prueba se ejecutó correctamente!");
     }
     
     @Test
@@ -106,7 +303,7 @@ public class SeleniumTestV2 {
         driver.close();
         System.out.println("TC5: La prueba se ejecutó correctamente!");
     }
-    
+
     private String getDriverPath() {
         String os = System.getProperty("os.name").toLowerCase();
         String projectPath = System.getProperty("user.dir");
