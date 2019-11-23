@@ -16,9 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.JavascriptExecutor;
 
 public class SeleniumTestV2 {
@@ -33,70 +30,22 @@ public class SeleniumTestV2 {
         driver = new ChromeDriver();
         driver.get("http://demo.nopcommerce.com");
         driver.manage().window().maximize();
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Computers")));
         driver.get("http://demo.nopcommerce.com/computers");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Electronics")));
         driver.get("http://demo.nopcommerce.com/electronics");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Apparel")));
         driver.get("http://demo.nopcommerce.com/apparel");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Digital downloads")));
         driver.get("http://demo.nopcommerce.com/digital-downloads");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Books")));
         driver.get("http://demo.nopcommerce.com/books");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Jewelry")));
         driver.get("http://demo.nopcommerce.com/jewelry");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Gift Cards")));
         driver.get("http://demo.nopcommerce.com/gift-cards");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Gift Cards")));
         driver.findElement(By.xpath("//div[@class='header-logo']/a")).click();
         driver.close();
         System.out.println("TC1: La prueba se ejecutó correctamente!");
@@ -107,31 +56,19 @@ public class SeleniumTestV2 {
         driver = new ChromeDriver();
         driver.get("http://demo.nopcommerce.com/wishlist");
         driver.manage().window().maximize();
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         String noDataText = driver.findElement(By.className("no-data")).getText();
         assertEquals("The wishlist is empty!", noDataText);
         WebElement searchBar = driver.findElement(By.id("small-searchterms"));
         searchBar.sendKeys("Fahrenheit 451");
         searchBar.sendKeys(Keys.ENTER);
         driver.findElement(By.className("add-to-wishlist-button")).click();
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
         driver.get("http://demo.nopcommerce.com/wishlist");
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("wishlist-content")));
         String skuNumber = driver.findElement(By.className("sku-number")).getText();
         assertEquals("FR_451_RB", skuNumber);
         driver.findElement(By.className("cart-label")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("page-title")));
         String noDataText2 = driver.findElement(By.className("no-data")).getText();
         assertEquals("Your Shopping Cart is empty!", noDataText2);
         driver.findElement(By.className("wishlist-label")).click();
@@ -144,29 +81,13 @@ public class SeleniumTestV2 {
         });
         driver.findElement(By.name("addtocart")).click();
         driver.findElement(By.name("addtocartbutton")).click();
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("page-title")));
         skuNumber = driver.findElement(By.className("sku-number")).getText();
         assertEquals("FR_451_RB", skuNumber);
         driver.findElement(By.name("continueshopping")).click();
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver wdriver) {
-                return ((JavascriptExecutor) driver).executeScript(
-                        "return document.readyState"
-                ).equals("complete");
-            }
-        });  
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("page-title"))); 
         System.out.println("TC2: La prueba se ejecutó correctamente!");
-    }
-    
-    @Test
-    public void testCase3() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+
         driver.get("http://demo.nopcommerce.com/cart");
         wait.until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver wdriver) {
@@ -229,7 +150,7 @@ public class SeleniumTestV2 {
         driver.close();
         System.out.println("TC3: La prueba se ejecutó correctamente!");
     }
-    
+
     @Test
     public void testCase4() {
         driver = new ChromeDriver();
